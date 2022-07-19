@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="MirrorKOLPackage"/>
+    <Type Value="RunAndDesignTime"/>
+    <AddToProjectUsesSection Value="True"/>
+    <AutoUpdate Value="OnRebuildingAll"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\kol"/>
+        <OtherUnitFiles Value="..\kol"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <CodeGeneration>
+        <Optimizations>
+          <OptimizationLevel Value="2"/>
+        </Optimizations>
+      </CodeGeneration>
+      <Linking>
+        <Debugging>
+          <GenerateDebugInfo Value="False"/>
+          <UseLineInfoUnit Value="False"/>
+        </Debugging>
+      </Linking>
+      <Other>
+        <Verbosity>
+          <ShowHints Value="False"/>
+        </Verbosity>
+        <CustomOptions Value="-dUNICODE_CTRLS"/>
+        <OtherDefines Count="2">
+          <Define0 Value="UNICODE_CTRLS"/>
+          <Define1 Value="VER90"/>
+        </OtherDefines>
+      </Other>
+    </CompilerOptions>
+    <Version Major="3" Minor="23"/>
+    <Files Count="14">
+      <Item1>
+        <Filename Value="..\kol\KOL.PAS"/>
+        <UnitName Value="KOL"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\kol\KOLadd.pas"/>
+        <UnitName Value="KOLadd"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\kol\KOLDirDlgEx.pas"/>
+        <UnitName Value="KOLDirDlgEx"/>
+      </Item3>
+      <Item4>
+        <Filename Value="MIRROR.PAS"/>
+        <HasRegisterProc Value="True"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mirror"/>
+      </Item4>
+      <Item5>
+        <Filename Value="mckToolbarEditor.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckToolbarEditor"/>
+      </Item5>
+      <Item6>
+        <Filename Value="mckAccEditor.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckAccEditor"/>
+      </Item6>
+      <Item7>
+        <Filename Value="mckActionListEditor.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckActionListEditor"/>
+      </Item7>
+      <Item8>
+        <Filename Value="mckCtrlDraw.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckCtrlDraw"/>
+      </Item8>
+      <Item9>
+        <Filename Value="mckCtrls.pas"/>
+        <HasRegisterProc Value="True"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckCtrls"/>
+      </Item9>
+      <Item10>
+        <Filename Value="mckFileFilterEditor.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckFileFilterEditor"/>
+      </Item10>
+      <Item11>
+        <Filename Value="mckLVColumnsEditor.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckLVColumnsEditor"/>
+      </Item11>
+      <Item12>
+        <Filename Value="mckMenuEditor.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckMenuEditor"/>
+      </Item12>
+      <Item13>
+        <Filename Value="mckObjs.pas"/>
+        <HasRegisterProc Value="True"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckObjs"/>
+      </Item13>
+      <Item14>
+        <Filename Value="mckLazarusIdeTemplates.pas"/>
+        <HasRegisterProc Value="True"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="mckLazarusIdeTemplates"/>
+      </Item14>
+    </Files>
+    <CompatibilityMode Value="True"/>
+    <RequiredPkgs Count="4">
+      <Item1>
+        <PackageName Value="LCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="IDEIntf"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="CodeTools"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item4>
+    </RequiredPkgs>
+    <UsageOptions>
+      <IncludePath Value="..\kol"/>
+      <UnitPath Value="..\kol;$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <Provides Count="1">
+      <Item1 Value="LCL"/>
+    </Provides>
+  </Package>
+</CONFIG>

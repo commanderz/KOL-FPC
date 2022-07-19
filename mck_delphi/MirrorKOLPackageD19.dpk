@@ -1,0 +1,57 @@
+package MirrorKOLPackageD19;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DEFINE UNICODE_CTRLS}
+{$DEFINE pas_only}
+{$DEFINE pas_version}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'MCK for XE5'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  vcl,
+  vclx,
+  xmlrtl;
+
+contains
+  mckCtrlDraw in 'mckCtrlDraw.pas',
+  mckCtrls in 'mckCtrls.pas',
+  mckFileFilterEditor in 'mckFileFilterEditor.pas',
+  mckLVColumnsEditor in 'mckLVColumnsEditor.pas',
+  mckMenuEditor in 'mckMenuEditor.pas',
+  mckObjs in 'mckObjs.pas',
+  mckToolbarEditor in 'mckToolbarEditor.pas',
+  KOL in '..\KOL.pas',
+  KOLadd in '..\KOLadd.pas',
+  MCKAppExpert200x in 'MCKAppExpert200x.pas',
+  mirror in 'mirror.pas',
+  mckAccEditor in 'mckAccEditor.pas',
+  mckActionListEditor in 'mckActionListEditor.pas';
+
+end.
