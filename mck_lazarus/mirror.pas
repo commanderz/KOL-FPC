@@ -390,23 +390,23 @@ type
     property BUILD: Boolean read GetBuild write SetBuild stored False;
     property consoleOut: Boolean read FConsoleOut write SetConsoleOut default False;
 
-    property SupportAnsiMnemonics: LCID read FSupportAnsiMnemonics write SetSupportAnsiMnemonics;
+    property SupportAnsiMnemonics: LCID read FSupportAnsiMnemonics write SetSupportAnsiMnemonics default 0;
     {* Change this value to provide supporting of ANSI (localized) mnemonics.
        To have effect for a form, property SupportMnemonics should be set to
        TRUE for such form too. This value should be set to a number, correspondent
        to locale which is desired to be supported. Or, set it to value 1, to
        support default user locale of the system where the project is built.  }
 
-    property PaintType: TPaintType read FPaintType write SetPaintType;
+    property PaintType: TPaintType read FPaintType write SetPaintType default ptWYSIWIG;
 
     property HelpFile: String read FHelpFile write SetHelpFile;
-    property ShowHint: Boolean read FShowHint write SetShowHint;
+    property ShowHint: Boolean read FShowHint write SetShowHint default False;
     {* To provide tooltip (hint) showing, it is necessary to define conditional
        symbol USE_MHTOOLTIP in
        Project|Options|Directories/Conditionals|Conditional Defines. }
     property CallPCompiler: String read FCallPCompiler write SetCallPCompiler;
-    property ReportDetailed: Boolean read FReportDetailed write SetReportDetailed;
-    property GeneratePCode: Boolean read FGeneratePCode write SetGeneratePCode;
+    property ReportDetailed: Boolean read FReportDetailed write SetReportDetailed default False;
+    property GeneratePCode: Boolean read FGeneratePCode write SetGeneratePCode default False;
     property NewIF: Boolean read getNewIf write setNewIf;
     property DefaultFont: TKOLFont read FDefaultFont write SetDefaultFont;
     property FormCompactDisabled: Boolean read FFormCompactDisabled write SetFormCompactDisabled;
@@ -471,6 +471,7 @@ type
     procedure SetFontWeight(Value: Integer);
     procedure SetFontWidth(const Value: Integer);
     procedure SetFontQuality(const Value: TFontQuality);
+    function IsFontNameStored: boolean;
   protected
     procedure Changing;
   public
@@ -482,16 +483,16 @@ type
     procedure Assign( Value: TPersistent ); override;
     property Owner: TComponent read fOwner;
   published
-    property Color: TColor read FColor write SetColor;
-    property FontStyle: TFontStyles read FFontStyle write SetFontStyle;
-    property FontHeight: Integer read FFontHeight write SetFontHeight;
-    property FontWidth: Integer read FFontWidth write SetFontWidth;
-    property FontWeight: Integer read FFontWeight write SetFontWeight;
-    property FontName: String read FFontName write SetFontName;
-    property FontOrientation: Integer read FFontOrientation write SetFontOrientation;
-    property FontCharset: Byte read FFontCharset write SetFontCharset;
-    property FontPitch: TFontPitch read FFontPitch write SetFontPitch;
-    property FontQuality: TFontQuality read FFontQuality write SetFontQuality;
+    property Color: TColor read FColor write SetColor default clWindowText;
+    property FontStyle: TFontStyles read FFontStyle write SetFontStyle default [];
+    property FontHeight: Integer read FFontHeight write SetFontHeight default 0;
+    property FontWidth: Integer read FFontWidth write SetFontWidth default 0;
+    property FontWeight: Integer read FFontWeight write SetFontWeight default 0;
+    property FontName: String read FFontName write SetFontName stored IsFontNameStored;
+    property FontOrientation: Integer read FFontOrientation write SetFontOrientation default 0;
+    property FontCharset: Byte read FFontCharset write SetFontCharset default DEFAULT_CHARSET;
+    property FontPitch: TFontPitch read FFontPitch write SetFontPitch default fpDefault;
+    property FontQuality: TFontQuality read FFontQuality write SetFontQuality default fqDefault;
   end;
 
   TKOLBrush = class( TPersistent )
@@ -506,6 +507,7 @@ type
     procedure SetBrushStyle(const Value: TBrushStyle);
     procedure SetColor(const Value: TColor);
     procedure SetAllowBitmapCompression(const Value: Boolean);
+    function IsColorStored: boolean;
   protected
     procedure GenerateCode( SL: TStrings; const AName: String );
     procedure P_GenerateCode( SL: TStrings; const AName: String );
@@ -515,8 +517,8 @@ type
     destructor Destroy; override;
     procedure Assign( Value: TPersistent ); override;
   published
-    property Color: TColor read FColor write SetColor;
-    property BrushStyle: TBrushStyle read FBrushStyle write SetBrushStyle;
+    property Color: TColor read FColor write SetColor stored IsColorStored;
+    property BrushStyle: TBrushStyle read FBrushStyle write SetBrushStyle default bsSolid;
     property Bitmap: TBitmap read FBitmap write SetBitmap;
     property AllowBitmapCompression: Boolean read FAllowBitmapCompression write SetAllowBitmapCompression
              default TRUE;
@@ -618,19 +620,19 @@ type
     function Pcode_Generate: Boolean; virtual;
   published
     property Icon: String read FIcon write SetIcon;
-    property ForceIcon16x16: Boolean read FForceIcon16x16 write SetForceIcon16x16;
+    property ForceIcon16x16: Boolean read FForceIcon16x16 write SetForceIcon16x16 default False;
     property Caption: String read fCaption write SetCaption;
-    property Visible: Boolean read fVisible write SetVisible;
+    property Visible: Boolean read fVisible write SetVisible default True;
     property OnMessage: TOnMessage read FOnMessage write SetOnMessage;
     property OnDestroy: TOnEvent read FOnDestroy write SetOnDestroy;
     property OnClose: TOnEventAccept read FOnClose write SetOnClose;
     property OnQueryEndSession: TOnEventAccept read FOnQueryEndSession write SetOnQueryEndSession;
     property OnMinimize: TOnEvent read FOnMinimize write SetOnMinimize;
     property OnRestore: TOnEvent read FOnRestore write SetOnRestore;
-    property AllBtnReturnClick: Boolean read FAllBtnReturnClick write SetAllBtnReturnClick;
-    property Tag: Integer read FTag write SetTag;
-    property Tabulate: Boolean read FTabulate write SetTabulate;
-    property TabulateEx: Boolean read FTabulateEx write SetTabulateEx;
+    property AllBtnReturnClick: Boolean read FAllBtnReturnClick write SetAllBtnReturnClick default False;
+    property Tag: Integer read FTag write SetTag default 0;
+    property Tabulate: Boolean read FTabulate write SetTabulate default False;
+    property TabulateEx: Boolean read FTabulateEx write SetTabulateEx default False;
     property UnitSourcePath: String read fSourcePath write fSourcePath;
   end;
 
@@ -1025,7 +1027,7 @@ type
     procedure AlignChildren( PrntCtrl: TKOLCustomControl; Recursive: Boolean );
     function HasMainMenu: Boolean;
   published
-    property Locked: Boolean read FLocked write SetLocked;
+    property Locked: Boolean read FLocked write SetLocked default False;
 
     //property AutoCreate: Boolean read GetAutoCreate write fAutoCreate;
 
@@ -1055,35 +1057,35 @@ type
     // TKOLForm лежит на той же форме, что и TKOLProject. (¬ KOL главна€
     // форма выполн€ет особую роль, и даже может замещать собой объект
     // Applet при его отсутствии).
-    property formMain: Boolean read GetFormMain write SetFormMain;
+    property formMain: Boolean read GetFormMain write SetFormMain default False;
     property Caption: TDelphiString read GetCaption write SetFormCaption;
     property Visible;
     property Enabled default True;
 
     property bounds: TFormBounds read fBounds write Set_Bounds;
-    property defaultSize: Boolean read fDefaultSize write SetDefaultSize;
-    property defaultPosition: Boolean read fDefaultPos write SetDefaultPos;
-    property MinWidth: Integer read FMinWidth write SetMinWidth;
-    property MinHeight: Integer read FMinHeight write SetMinHeight;
-    property MaxWidth: Integer read FMaxWidth write SetMaxWidth;
-    property MaxHeight: Integer read FMaxHeight write SetMaxHeight;
+    property defaultSize: Boolean read fDefaultSize write SetDefaultSize default False;
+    property defaultPosition: Boolean read fDefaultPos write SetDefaultPos default False;
+    property MinWidth: Integer read FMinWidth write SetMinWidth default 0;
+    property MinHeight: Integer read FMinHeight write SetMinHeight default 0;
+    property MaxWidth: Integer read FMaxWidth write SetMaxWidth default 0;
+    property MaxHeight: Integer read FMaxHeight write SetMaxHeight default 0;
 
-    property HasBorder: Boolean read FHasBorder write SetHasBorder;
-    property HasCaption: Boolean read FHasCaption write SetHasCaption;
-    property StayOnTop: Boolean read FStayOnTop write SetStayOnTop;
-    property CanResize: Boolean read fCanResize write SetCanResize;
-    property CenterOnScreen: Boolean read fCenterOnScr write SetCenterOnScr;
-    property CenterOnCurrentScreen: Boolean read fCenterOnCurScrn write SetCenterOnCurScrn;
-    property Ctl3D: Boolean read FCtl3D write SetCtl3D;
-    property WindowState: KOL.TWindowState read FWindowState write SetWindowState;
+    property HasBorder: Boolean read FHasBorder write SetHasBorder default True;
+    property HasCaption: Boolean read FHasCaption write SetHasCaption default True;
+    property StayOnTop: Boolean read FStayOnTop write SetStayOnTop default False;
+    property CanResize: Boolean read fCanResize write SetCanResize default True;
+    property CenterOnScreen: Boolean read fCenterOnScr write SetCenterOnScr default False;
+    property CenterOnCurrentScreen: Boolean read fCenterOnCurScrn write SetCenterOnCurScrn default False;
+    property Ctl3D: Boolean read FCtl3D write SetCtl3D default True;
+    property WindowState: KOL.TWindowState read FWindowState write SetWindowState default KOL.wsNormal;
 
     // These three properties are for design time only:
-    property minimizeIcon: Boolean read FMinimizeIcon write SetMinimizeIcon;
-    property maximizeIcon: Boolean read FMaximizeIcon write SetMaximizeIcon;
-    property closeIcon: Boolean read FCloseIcon write SetCloseIcon;
-    property helpContextIcon: Boolean read FhelpContextIcon write SethelpContextIcon;
-    property borderStyle: TKOLFormBorderStyle read FborderStyle write SetborderStyle; {YS}
-    property HelpContext: Integer read FHelpContext write SetHelpContext;
+    property minimizeIcon: Boolean read FMinimizeIcon write SetMinimizeIcon default True;
+    property maximizeIcon: Boolean read FMaximizeIcon write SetMaximizeIcon default True;
+    property closeIcon: Boolean read FCloseIcon write SetCloseIcon default True;
+    property helpContextIcon: Boolean read FhelpContextIcon write SethelpContextIcon default False;
+    property borderStyle: TKOLFormBorderStyle read FborderStyle write SetborderStyle default fbsSingle; {YS}
+    property HelpContext: Integer read FHelpContext write SetHelpContext default 0;
 
     // Properties Icon and Cursor at design time are represented as strings.
     // These allow to autoload real Icon: HIcon and Cursor: HCursor from
@@ -1096,37 +1098,37 @@ type
     property Icon: String read FIcon write SetIcon;
     property Cursor: String read FCursor write SetCursor;
 
-    property Color: TColor read Get_Color write Set_Color;
+    property Color: TColor read Get_Color write Set_Color stored False;
     property Font: TKOLFont read fFont write SetFont;
-    property FontDefault: Boolean read FFontDefault write SetFontDefault;
+    property FontDefault: Boolean read FFontDefault write SetFontDefault default True;
     property Brush: TKOLBrush read FBrush write SetBrush;
 
-    property DoubleBuffered: Boolean read FDoubleBuffered write SetDoubleBuffered;
-    property PreventResizeFlicks: Boolean read FPreventResizeFlicks write SetPreventResizeFlicks;
-    property Transparent: Boolean read FTransparent write SetTransparent;
-    property AlphaBlend: Integer read FAlphaBlend write SetAlphaBlend;
+    property DoubleBuffered: Boolean read FDoubleBuffered write SetDoubleBuffered default False;
+    property PreventResizeFlicks: Boolean read FPreventResizeFlicks write SetPreventResizeFlicks  default False;
+    property Transparent: Boolean read FTransparent write SetTransparent default False;
+    property AlphaBlend: Integer read FAlphaBlend write SetAlphaBlend default 255;
 
-    property Border: Integer read fMargin write SetMargin;
-    property MarginLeft: Integer read FMarginLeft write SetMarginLeft;
-    property MarginRight: Integer read FMarginRight write SetMarginRight;
-    property MarginTop: Integer read FMarginTop write SetMarginTop;
-    property MarginBottom: Integer read FMarginBottom write SetMarginBottom;
+    property Border: Integer read fMargin write SetMargin default 2;
+    property MarginLeft: Integer read FMarginLeft write SetMarginLeft default 0;
+    property MarginRight: Integer read FMarginRight write SetMarginRight default 0;
+    property MarginTop: Integer read FMarginTop write SetMarginTop default 0;
+    property MarginBottom: Integer read FMarginBottom write SetMarginBottom default 0;
 
-    property MinimizeNormalAnimated: Boolean read FMinimizeNormalAnimated write SetMinimizeNormalAnimated;
-    property RestoreNormalMaximized: Boolean read FRestoreNormalMaximized write SetRestoreNormalMaximized;
-    property zOrderChildren: Boolean read FzOrderChildren write SetzOrderChildren;
+    property MinimizeNormalAnimated: Boolean read FMinimizeNormalAnimated write SetMinimizeNormalAnimated default False;
+    property RestoreNormalMaximized: Boolean read FRestoreNormalMaximized write SetRestoreNormalMaximized default False;
+    property zOrderChildren: Boolean read FzOrderChildren write SetzOrderChildren default False;
 
     property SimpleStatusText: TDelphiString read FSimpleStatusText write SetSimpleStatusText;
     property StatusText: TStrings read GetStatusText write SetStatusText;
-    property statusSizeGrip: Boolean read FStatusSizeGrip write SetStatusSizeGrip;
+    property statusSizeGrip: Boolean read FStatusSizeGrip write SetStatusSizeGrip default True;
 
-    property Localizy: Boolean read FLocalizy write SetLocalizy;
-    property ShowHint: Boolean read GetShowHint write SetShowHint;
+    property Localizy: Boolean read FLocalizy write SetLocalizy default False;
+    property ShowHint: Boolean read GetShowHint write SetShowHint default False;
     {* To provide tooltip (hint) showing, it is necessary to define conditional
        symbol USE_MHTOOLTIP in
        Project|Options|Directories/Conditionals|Conditional Defines. }
 
-    property KeyPreview: Boolean read FKeyPreview write SetKeyPreview;
+    property KeyPreview: Boolean read FKeyPreview write SetKeyPreview default False;
 
     property OnClick: TOnEvent read fOnClick write SetOnClick;
     property OnMouseDblClk: TOnMouse read fOnMouseDblClk write SetOnMouseDblClk;
@@ -1153,8 +1155,8 @@ type
     property OnFormCreate: TOnEvent read FOnFormCreate write SetOnFormCreate;
     property OnPaint: TOnPaint read FOnPaint write SetOnPaint;
     property OnEraseBkgnd: TOnPaint read FOnEraseBkgnd write SetOnEraseBkgnd;
-    property EraseBackground: Boolean read FEraseBackground write SetEraseBackground;
-    property supportMnemonics: Boolean read FSupportMnemonics write SetSupportMnemonics;
+    property EraseBackground: Boolean read FEraseBackground write SetEraseBackground default False;
+    property supportMnemonics: Boolean read FSupportMnemonics write SetSupportMnemonics default False;
     property popupMenu: TKOLPopupMenu read FpopupMenu write SetpopupMenu;
     property OnMaximize: TOnEvent read FOnMaximize write SetOnMaximize;
     property OnHelp: TOnHelp read FOnHelp write SetOnHelp;
@@ -1344,7 +1346,7 @@ type
     // зеркальный класс TKOLImageList соответствует типу TImageList в
     // KOL, возвращаетс€ 'ImageList').
     function TypeName: String; virtual;
-    property Localizy: TLocalizyOptions read FLocalizy write SetLocalizy;
+    property Localizy: TLocalizyOptions read FLocalizy write SetLocalizy default loForm;
 
     property CreationPriority: Integer read fCreationPriority;
 
@@ -1588,20 +1590,20 @@ type
     procedure DesignTimeClick;
     function CheckOnMenuMethodExists: Boolean;
   published
-    property Tag: Integer read FTag write SetTag;
+    property Tag: Integer read FTag write SetTag default 0;
     property Caption: TDelphiString read FCaption write SetCaption;
     property bitmap: TBitmap read FBitmap write SetBitmap;
     property bitmapChecked: TBitmap read FbitmapChecked write SetbitmapChecked;
     property bitmapItem: TBitmap read FbitmapItem write SetbitmapItem;
-    property default: Boolean read Fdefault write Setdefault;
-    property enabled: Boolean read FEnabled write SetEnabled;
-    property visible: Boolean read FVisible write SetVisible;
-    property checked: Boolean read FChecked write SetChecked;
-    property radioGroup: Integer read FRadioGroup write SetRadioGroup;
-    property separator: Boolean read FSeparator write SetSeparator;
+    property default: Boolean read Fdefault write Setdefault default False;
+    property enabled: Boolean read FEnabled write SetEnabled default True;
+    property visible: Boolean read FVisible write SetVisible default True;
+    property checked: Boolean read FChecked write SetChecked default False;
+    property radioGroup: Integer read FRadioGroup write SetRadioGroup default 0;
+    property separator: Boolean read FSeparator write SetSeparator default False;
     property accelerator: TKOLAccelerator read FAccelerator write SetAccelerator;
-    property MenuBreak: TMenuBreak read FMenuBreak write SetMenuBreak;
-    property ownerDraw: Boolean read FownerDraw write SetownerDraw;
+    property MenuBreak: TMenuBreak read FMenuBreak write SetMenuBreak default mbrNone;
+    property ownerDraw: Boolean read FownerDraw write SetownerDraw default False;
     property OnMenu: TOnMenuItem read FOnMenu write SetOnMenu;
 
     // property ItemIndex is to show only in ObjectInspector index of the
@@ -1610,9 +1612,9 @@ type
     // properties at run time).
     property itemindex: Integer read GetItemIndex write SetItemIndex_Dummy
              stored False;
-    property WindowMenu: Boolean read FWindowMenu write SetWindowMenu;
-    property HelpContext: Integer read FHelpContext write SetHelpContext;
-    property action: TKOLAction read Faction write Setaction;
+    property WindowMenu: Boolean read FWindowMenu write SetWindowMenu default False;
+    property HelpContext: Integer read FHelpContext write SetHelpContext default 0;
+    property action: TKOLAction read Faction write Setaction stored False;
     property AllowBitmapCompression: Boolean read FAllowBitmapCompression write SetAllowBitmapCompression
              default TRUE;
   end;
@@ -1682,12 +1684,12 @@ type
   published
     property OnMenuItem: TOnMenuItem read FOnMenuItem write SetOnMenuItem;
     property OnUncheckRadioItem: TOnMenuItem read FOnUncheckRadioItem write SetOnUncheckRadioItem;
-    property showShortcuts: Boolean read Fshowshortcuts write Setshowshortcuts;
-    property generateConstants: Boolean read FgenerateConstants write SetgenerateConstants;
-    property generateSeparatorConstants: Boolean read FgenerateSeparatorConstants write SetgenerateSeparatorConstants;
+    property showShortcuts: Boolean read Fshowshortcuts write Setshowshortcuts default True;
+    property generateConstants: Boolean read FgenerateConstants write SetgenerateConstants default True;
+    property generateSeparatorConstants: Boolean read FgenerateSeparatorConstants write SetgenerateSeparatorConstants default False;
     property OnMeasureItem: TOnMeasureItem read FOnMeasureItem write SetOnMeasureItem;
     property OnDrawItem: TOnDrawItem read FOnDrawItem write SetOnDrawItem;
-    property OwnerDraw: Boolean read FOwnerDraw write SetOwnerDraw;
+    property OwnerDraw: Boolean read FOwnerDraw write SetOwnerDraw default False;
   end;
 
   TKOLMainMenu = class(TKOLMenu)
@@ -1727,7 +1729,7 @@ type
   public
     procedure P_DoProvideFakeType( SL: TStringList ); override;
   published
-    property Flags: TPopupMenuFlags read FFlags write SetFlags;
+    property Flags: TPopupMenuFlags read FFlags write SetFlags default [];
     property OnPopup: TOnEvent read FOnPopup write SetOnPopup;
     property Localizy;
   end;
@@ -2106,6 +2108,7 @@ type
     procedure SetBrush(const Value: TKOLBrush);
     procedure SetIsGenerateSize(const Value: Boolean);
     procedure SetIsGeneratePosition(const Value: Boolean);
+    procedure SetUnicode(const Value: Boolean);
     procedure Setaction(const Value: TKOLAction);
     procedure SetAnchorLeft(const Value: Boolean); //+Sormart
     procedure SetAnchorTop(const Value: Boolean);  //+Sormart
@@ -2222,7 +2225,7 @@ type
     // Caption именем создаваемого объекта.
     procedure FirstCreate; virtual;
 
-    property TextAlign: TTextAlign read FTextAlign write SetTextAlign;
+    property TextAlign: TTextAlign read FTextAlign write SetTextAlign default taLeft;
     property VerticalAlign: TVerticalAlign read FVerticalAlign write SetVerticalAlign;
     function VerticalAlignAsKOLVerticalAlign: Integer;
 
@@ -2409,15 +2412,16 @@ type
     function P_StringConstant( const Propname, Value: String ): String;
     function BestEventName: String; virtual;
     function GetDefaultControlFont: HFONT; virtual;
-    //function IsFontStored: boolean;
-    //function IsBrushStored: boolean;
-    //function IsColorStored: boolean;
+    function IsFontStored: boolean;
+    function IsBrushStored: boolean;
+    function IsColorStored: boolean;
     procedure KOLControlRecreated;
     {$IFNDEF NOT_USE_KOLCTRLWRAPPER}
      override;
     {$ELSE NOT_USE_KOLCTRLWRAPPER}
      virtual;
     procedure CreateKOLControl(Recreating: boolean); virtual;
+    function IsBorderStored: boolean; virtual;
     procedure UpdateAllowSelfPaint;
   protected
     FKOLCtrl: PControl;
@@ -2427,8 +2431,8 @@ type
     property AllowPostPaint: boolean read FAllowPostPaint write FAllowPostPaint;
     property AllowSelfPaint: boolean read FAllowSelfPaint write FAllowSelfPaint;
     property AllowCustomPaint: boolean read FAllowCustomPaint write FAllowCustomPaint;
-    property WordWrap: Boolean read FWordWrap write SetWordWrap; // only for graphic button (Windowed = FALSE)
-    property LikeSpeedButton: Boolean read FLikeSpeedButton write SetLikeSpeedButton;
+    property WordWrap: Boolean read FWordWrap write SetWordWrap default False; // only for graphic button (Windowed = FALSE)
+    property LikeSpeedButton: Boolean read FLikeSpeedButton write SetLikeSpeedButton default False;
   public
     function Pcode_Generate: Boolean; virtual;
     property IsGenerateSize: Boolean read FIsGenerateSize write SetIsGenerateSize;
@@ -2451,7 +2455,7 @@ type
     procedure Click; override;
     procedure SetBounds( aLeft, aTop, aWidth, aHeight: Integer ); override;
     procedure ReAlign( ParentOnly: Boolean );
-    property Transparent: Boolean read FTransparent write SetTransparent;
+    property Transparent: Boolean read FTransparent write SetTransparent default False;
 
     property TabStop: Boolean read FTabStop write SetTabStop;
 
@@ -2463,12 +2467,12 @@ type
     property OnKeyChar: TOnChar read FOnChar write SetOnChar;
     property OnKeyDeadChar: TOnChar read FOnDeadChar write SetOnDeadChar;
     property Margin: Integer read fMargin write SetMargin;
-    property Border: Integer read fMargin write SetMargin;
+    property Border: Integer read fMargin write SetMargin stored IsBorderStored;
     function BorderNeeded: Boolean; virtual;
-    property MarginLeft: Integer read FMarginLeft write SetMarginLeft;
-    property MarginRight: Integer read FMarginRight write SetMarginRight;
-    property MarginTop: Integer read FMarginTop write SetMarginTop;
-    property MarginBottom: Integer read FMarginBottom write SetMarginBottom;
+    property MarginLeft: Integer read FMarginLeft write SetMarginLeft default 0;
+    property MarginRight: Integer read FMarginRight write SetMarginRight default 0;
+    property MarginTop: Integer read FMarginTop write SetMarginTop default 0;
+    property MarginBottom: Integer read FMarginBottom write SetMarginBottom default 0;
     property OnRE_URLClick: TOnEvent read FOnRE_URLClick write SetOnRE_URLClick;
     property OnRE_OverURL: TOnEvent read FOnRE_OverURL write SetOnRE_OverURL;
     property OnRE_InsOvrMode_Change: TOnEvent read FOnRE_InsOvrMode_Change write SetOnRE_InsOvrMode_Change;
@@ -2479,9 +2483,9 @@ type
     property OnTVExpanded: TOnTVExpanded read FOnTVExpanded write SetOnTVExpanded;
     property OnTVDelete: TOnTVDelete read FOnTVDelete write SetOnTVDelete;
     property OnTVSelChanging: TOnTVSelChanging read FOnTVSelChanging write SetOnTVSelChanging;
-    property autoSize: Boolean read FautoSize write Set_autoSize;
+    property autoSize: Boolean read FautoSize write Set_autoSize default False;
     property HasBorder: Boolean read FHasBorder write SetHasBorder;
-    property EditTabChar: Boolean read FEditTabChar write SetEditTabChar;
+    property EditTabChar: Boolean read FEditTabChar write SetEditTabChar default False;
   //published
     property TabOrder: Integer read GetTabOrder write SetTabOrder;
     // This section contains published properties, available in Object
@@ -2499,22 +2503,22 @@ type
     property Width;
     property Height;
 
-    property MinWidth: Integer read FMinWidth write SetMinWidth;
-    property MinHeight: Integer read FMinHeight write SetMinHeight;
-    property MaxWidth: Integer read FMaxWidth write SetMaxWidth;
-    property MaxHeight: Integer read FMaxHeight write SetMaxHeight;
+    property MinWidth: Integer read FMinWidth write SetMinWidth default 0;
+    property MinHeight: Integer read FMinHeight write SetMinHeight default 0;
+    property MaxWidth: Integer read FMaxWidth write SetMaxWidth default 0;
+    property MaxHeight: Integer read FMaxHeight write SetMaxHeight default 0;
 
     property Cursor_: String read FCursor write SetCursor;
     property Cursor: Boolean read FFalse;
 
-    property PlaceDown: Boolean read fPlaceDown write SetPlaceDown;
-    property PlaceRight: Boolean read fPlaceRight write SetPlaceRight;
-    property PlaceUnder: Boolean read fPlaceUnder write SetPlaceUnder;
+    property PlaceDown: Boolean read fPlaceDown write SetPlaceDown default False;
+    property PlaceRight: Boolean read fPlaceRight write SetPlaceRight default False;
+    property PlaceUnder: Boolean read fPlaceUnder write SetPlaceUnder default False;
 
     property Visible: Boolean read Get_Visible write Set_Visible;
     property Enabled: Boolean read Get_Enabled write Set_Enabled;
 
-    property DoubleBuffered: Boolean read FDoubleBuffered write SetDoubleBuffered;
+    property DoubleBuffered: Boolean read FDoubleBuffered write SetDoubleBuffered default False;
 
     // Property Align is redeclared to provide type correspondence
     // (to avoid conflict between VCL.Align and KOL.Align).
@@ -2528,10 +2532,10 @@ type
     property Caption: TDelphiString read fCaption write SetCaption;
     property Ctl3D: Boolean read FCtl3D write SetCtl3D;
 
-    property Color: TColor read Get_Color write Set_Color;
+    property Color: TColor read Get_Color write Set_Color stored IsColorStored;
     property parentColor: Boolean read GetParentColor write SetparentColor;
     property Font: TKOLFont read FFont write SetFont;
-    property Brush: TKOLBrush read FBrush write SetBrush;
+    property Brush: TKOLBrush read FBrush write SetBrush stored IsBrushStored;
     property parentFont: Boolean read GetParentFont write SetParentFont;
 
     property OnClick: TOnEvent read fOnClick write SetOnClick;
@@ -2554,27 +2558,27 @@ type
     property OnEraseBkgnd: TOnPaint read FOnEraseBkgnd write SetOnEraseBkgnd;
     property EraseBackground: Boolean read FEraseBackground write SetEraseBackground;
 
-    property Tag: Integer read FTag write SetTag;
+    property Tag: Integer read FTag write SetTag default 0;
     property Hint: String read FHint write SetHint;
 
-    property HelpContext: Integer read FHelpContext1 write SetHelpContext;
-    property Localizy: TLocalizyOptions read FLocalizy write SetLocalizy;
-    property DefaultBtn: Boolean read FDefaultBtn write SetDefaultBtn;
-    property CancelBtn: Boolean read FCancelBtn write SetCancelBtn;
+    property HelpContext: Integer read FHelpContext1 write SetHelpContext default 0;
+    property Localizy: TLocalizyOptions read FLocalizy write SetLocalizy default loForm;
+    property DefaultBtn: Boolean read FDefaultBtn write SetDefaultBtn default False;
+    property CancelBtn: Boolean read FCancelBtn write SetCancelBtn default False;
     property action: TKOLAction read Faction write Setaction stored False;
     property Windowed: Boolean read GetWindowed write SetWindowed;
     property popupMenu: TKOLPopupMenu read FpopupMenu write SetpopupMenu;
-    property OverrideScrollbars: Boolean read FOverrideScrollbars write SetOverrideScrollbars;
+    property OverrideScrollbars: Boolean read FOverrideScrollbars write SetOverrideScrollbars default True;
   protected
     fOldWidth, fOldHeight: Integer;
   published
-    property IgnoreDefault: Boolean read FIgnoreDefault write SetIgnoreDefault;
-    property AnchorLeft: Boolean read FAnchorLeft write SetAnchorLeft; //+Sormart
-    property AnchorTop: Boolean read FAnchorTop write SetAnchorTop;    //+Sormart
-    property AnchorRight: Boolean read FAnchorRight write SetAnchorRight;
-    property AnchorBottom: Boolean read FAnchorBottom write SetAnchorBottom;
-    property AcceptChildren: Boolean read FAcceptChildren write SetAcceptChildren;
-    property MouseTransparent: Boolean read FMouseTransparent write SetMouseTransparent;
+    property IgnoreDefault: Boolean read FIgnoreDefault write SetIgnoreDefault default False;
+    property AnchorLeft: Boolean read FAnchorLeft write SetAnchorLeft default False; //+Sormart
+    property AnchorTop: Boolean read FAnchorTop write SetAnchorTop default False;    //+Sormart
+    property AnchorRight: Boolean read FAnchorRight write SetAnchorRight default False;
+    property AnchorBottom: Boolean read FAnchorBottom write SetAnchorBottom default False;
+    property AcceptChildren: Boolean read FAcceptChildren write SetAcceptChildren default False;
+    property MouseTransparent: Boolean read FMouseTransparent write SetMouseTransparent default False;
   protected
     function SupportsFormCompact: Boolean; virtual;
     function HasCompactConstructor: Boolean; virtual;
@@ -2591,31 +2595,31 @@ type
     function Generate_SetSize: String; override;
     procedure Change; override;
   published
-    property TabOrder;
+    property TabOrder default -2;
     property Left;
     property Top;
     property Width;
     property Height;
 
-    property MinWidth;
-    property MinHeight;
-    property MaxWidth;
-    property MaxHeight;
+    property MinWidth default 0;
+    property MinHeight default 0;
+    property MaxWidth default 0;
+    property MaxHeight default 0;
     property Cursor_;
-    property PlaceDown;
-    property PlaceRight;
-    property PlaceUnder;
-    property Visible;
-    property Enabled;
-    property DoubleBuffered;
-    property Align;
-    property CenterOnParent;
+    property PlaceDown default False;
+    property PlaceRight default False;
+    property PlaceUnder default False;
+    property Visible default True;
+    property Enabled default True;
+    property DoubleBuffered default False;
+    property Align default caNone;
+    property CenterOnParent default False;
     property Caption;
-    property Ctl3D;
+    property Ctl3D default True;
     property Color;
-    property parentColor;
-    property Font;
-    property parentFont;
+    property parentColor default True;
+    property Font stored IsFontStored;
+    property parentFont default True;
     property OnClick;
     property OnMouseDblClk;
     property OnDestroy;
@@ -2634,10 +2638,10 @@ type
     property OnHide;
     property OnPaint;
     property OnEraseBkgnd;
-    property EraseBackground;
-    property Tag;
-    property HelpContext;
-    property Localizy;
+    property EraseBackground default False;
+    property Tag default 0;
+    property HelpContext default 0;
+    property Localizy default loForm;
     property Hint;
   end;
 
@@ -2870,7 +2874,7 @@ type
   public
     constructor Create( AOwner: TComponent ); override;
   published
-    property EdgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle;
+    property EdgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle default esNone;
     property FormMain: Boolean read fNotAvailable;
     property AlphaBlend: Boolean read fNotAvailable;
     property bounds: Boolean read fNotAvailable;
@@ -2897,8 +2901,8 @@ type
     property TabulateEx: Boolean read fNotAvailable;
     property WindowState: Boolean read fNotAvailable;
     property Caption: String read fFrameCaption write SetFrameCaption;
-    property ParentColor: Boolean read FParentColor write SetParentColor;
-    property ParentFont: Boolean read FParentFont write SetParentFont;
+    property ParentColor: Boolean read FParentColor write SetParentColor default True;
+    property ParentFont: Boolean read FParentFont write SetParentFont default True;
     property OnQueryEndSession: Boolean read fNotAvailable;
     property OnClose: Boolean read fNotAvailable;
     property OnMinimize: Boolean read fNotAvailable;
@@ -9692,6 +9696,33 @@ begin
   Log( 'TKOLCustomControl.UpdateAllowSelfPaint' );
 end;
 {$ENDIF NOT_USE_KOLCTRLWRAPPER}
+
+function TKOLCustomControl.IsFontStored: boolean;
+begin
+  Result:=not parentFont;
+end;
+
+function TKOLCustomControl.IsBrushStored: boolean;
+begin
+  Result:=not parentColor;
+end;
+
+function TKOLCustomControl.IsColorStored: boolean;
+begin
+  Result:=not parentColor and (Color <> DefaultColor) and (Color <> clDefault);
+end;
+
+function TKOLCustomControl.IsBorderStored: boolean;
+begin
+  Result:=ParentMargin <> Border;
+end;
+
+procedure TKOLCustomControl.SetUnicode(const Value: Boolean);
+begin
+  if self.FUnicode = Value then Exit;
+  self.FUnicode := Value;
+  self.Change;
+end;
 
 procedure TKOLCustomControl.Setaction(const Value: TKOLAction);
 begin
@@ -23168,6 +23199,10 @@ begin
   Change;
 end;
 
+function TKOLFont.IsFontNameStored: boolean;
+begin
+  Result:=AnsiCompareText(self.FontName, 'system') <> 0;
+end;
 procedure TKOLFont.SetFontStyle(const Value: TFontStyles);
 begin
   asm
@@ -28170,6 +28205,17 @@ begin
     if FOwner is TKOLCustomControl then
       (FOwner as TKOLCustomControl).Color := Value;
   Change;
+end;
+
+function TKOLBrush.IsColorStored: boolean;
+begin
+  if fOwner is TKOLCustomControl then
+    Result:=self.Color <> TKOLCustomControl(fOwner).Color
+  else
+  if fOwner is TKOLForm then
+    Result:=self.Color <> TKOLForm(fOwner).Color
+  else
+    Result:=self.Color <> clBtnFace;
 end;
 
 { TKOLAction }
