@@ -47132,11 +47132,13 @@ end;
 
 function TControl.GetLVColEx(Idx: Integer; const Index: Integer): Integer;
 var LC: TLVColumn;
+    aa: word;
 begin
   ZeroMemory( @LC, Sizeof( LC ) ); {Alexey (Lecha2002)}
   LC.mask := LoWord( Index );
   Perform( LVM_GETCOLUMN, Idx, LPARAM( @ LC ) );
-  Result := PDWORD( PtrUInt( @LC ) - HiWord( Index ) )^;//Nikolas : має бути + а не -
+  aa := HiWord( Index );
+  Result := PDWORD( PtrUInt( @LC ) + aa )^;
 
 end;
 
@@ -47144,6 +47146,7 @@ end;
 procedure TControl.SetLVColEx(Idx: Integer; const Index: Integer;
   const Value: Integer);
 var LC: TLVColumn;
+    aa: word;
 begin
   ZeroMemory(@LC,SizeOf(LC));                                    // Added Line
   LC.mask := LoWord( Index );
@@ -47154,8 +47157,10 @@ begin
       LC.fmt := LC.fmt or LVCFMT_IMAGE or LVCFMT_COL_HAS_IMAGES // Added Line
     else LC.mask := LC.mask and not LVCF_IMAGE; // + by non
    end;
-  if (value<>-1)or(HiWord( Index )<>24) then    // + by non
-    PDWORD( PtrUInt( @ LC ) - HiWord( Index ) )^ := Value; //Nikolas: має бути + а не -
+  if (value<>-1)or(HiWord( Index )<>24) then begin   // + by non
+    aa := HiWord( Index );
+    PDWORD( PtrUInt( @ LC ) + aa )^ := Value;
+  end;
   Perform( LVM_SETCOLUMN, Idx, LPARAM( @ LC ) );
 end;
 
