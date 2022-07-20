@@ -1,5 +1,5 @@
 # KOL-FPC
- KOL & MCK for LAZARUS and DELPHI
+ KOL & MCK v3.23.4 for LAZARUS and DELPHI
  
  working with FPC v3.3.1 LAZARUS v2.3.0 
  
