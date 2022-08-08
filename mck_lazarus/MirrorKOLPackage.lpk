@@ -15,15 +15,18 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
+        <Style Value="1"/>
         <SyntaxOptions>
           <SyntaxMode Value="Delphi"/>
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
       <CodeGeneration>
+        <SmartLinkUnit Value="True"/>
         <Optimizations>
           <OptimizationLevel Value="2"/>
         </Optimizations>
+        <SmallerCode Value="True"/>
       </CodeGeneration>
       <Linking>
         <Debugging>
@@ -35,10 +38,12 @@
         <Verbosity>
           <ShowHints Value="False"/>
         </Verbosity>
-        <CustomOptions Value="-dUNICODE_CTRLS"/>
-        <OtherDefines Count="2">
+        <CustomOptions Value="-dUNICODE_CTRLS
+-dUnicode"/>
+        <OtherDefines Count="3">
           <Define0 Value="UNICODE_CTRLS"/>
           <Define1 Value="VER90"/>
+          <Define2 Value="Unicode"/>
         </OtherDefines>
       </Other>
     </CompilerOptions>
