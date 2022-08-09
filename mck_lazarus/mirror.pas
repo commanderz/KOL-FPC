@@ -1098,7 +1098,7 @@ type
     property Icon: String read FIcon write SetIcon;
     property Cursor: String read FCursor write SetCursor;
 
-    property Color: TColor read Get_Color write Set_Color stored False default clForm;
+    property Color: TColor read Get_Color write Set_Color;//default clForm
     property Font: TKOLFont read fFont write SetFont;
     property FontDefault: Boolean read FFontDefault write SetFontDefault default True;
     property Brush: TKOLBrush read FBrush write SetBrush;
