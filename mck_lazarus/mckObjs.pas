@@ -83,12 +83,12 @@ type
     function  Pcode_Generate: Boolean; override;
     procedure P_DoProvideFakeType( SL: TStringList ); override;
   published
-    property Interval: Integer read FInterval write SetInterval;
-    property Enabled: Boolean read FEnabled write SetEnabled;
+    property Interval: Integer read FInterval write SetInterval default 1000;
+    property Enabled: Boolean read FEnabled write SetEnabled default True;
     property OnTimer: TOnEvent read FOnTimer write SetOnTimer;
-    property Multimedia: Boolean read FMultimedia write SetMultimedia;
-    property Resolution: Integer read FResolution write SetResolution;
-    property Periodic: Boolean read FPeriodic write SetPeriodic;
+    property Multimedia: Boolean read FMultimedia write SetMultimedia default False;
+    property Resolution: Integer read FResolution write SetResolution default 0;
+    property Periodic: Boolean read FPeriodic write SetPeriodic default True;
   end;
 
   //============================================================================
@@ -135,7 +135,7 @@ type
     property OnResume: TOnEvent read FOnResume write SetOnResume;
     property startSuspended: Boolean read FstartSuspended write SetstartSuspended;
     property AutoFree: Boolean read F_AutoFree write SetAutoFree;
-    property PriorityBoost: Boolean read FPriorityBoost write SetPriorityBoost;
+    property PriorityBoost: Boolean read FPriorityBoost write SetPriorityBoost default True;
   end;
 
   //============================================================================
@@ -182,15 +182,15 @@ type
     procedure Assign( Value: TPersistent ); override;
     property Handle: THandle read GetImageListHandle;
   published
-    property ImgWidth: Integer read FImgWidth write SetImgWidth;
-    property ImgHeight: Integer read FImgHeight write SetImgHeight;
-    property Count: Integer read FCount write SetCount;
+    property ImgWidth: Integer read FImgWidth write SetImgWidth default 32;
+    property ImgHeight: Integer read FImgHeight write SetImgHeight default 32;
+    property Count: Integer read FCount write SetCount default 0;
     property bitmap: TBitmap read GetBitmap write SetBitmap;
-    property TransparentColor: TColor read GetTransparentColor write SetTransparentColor;
-    property systemimagelist: Boolean read FSystemImageList write SetSystemImageList;
-    property Colors: TImageListColors read FColors write SetColors;
-    property Masked: Boolean read FMasked write SetMasked;
-    property BkColor: TColor read FBkColor write SetBkColor;
+    property TransparentColor: TColor read GetTransparentColor write SetTransparentColor default clDefault;
+    property systemimagelist: Boolean read FSystemImageList write SetSystemImageList default False;
+    property Colors: TImageListColors read FColors write SetColors default ilcColor;
+    property Masked: Boolean read FMasked write SetMasked default True;
+    property BkColor: TColor read FBkColor write SetBkColor default clNone;
     property AllowCompression: Boolean read FAllowCompression write SetAllowCompression
              default TRUE;
     property Force32bit: Boolean read FForce32bit write SetForce32bit;
@@ -238,15 +238,15 @@ type
     constructor Create( AOwner: TComponent ); override;
     function Pcode_Generate: Boolean; override;
   published
-    property Options: TOpenSaveOptions read FOptions write SetOptions;
-    property NoPlaceBar: Boolean read FNoPlaceBar write SetNoPlaceBar;
+    property Options: TOpenSaveOptions read FOptions write SetOptions default [OSFileMustExist,OSHideReadonly,OSOverwritePrompt,OSPathMustExist];
+    property NoPlaceBar: Boolean read FNoPlaceBar write SetNoPlaceBar default False;
     property Title: String read FTitle write SetTitle;
     property TemplateName: String read FTemplateName write SetTemplateName;
     property InitialDir: String read FInitialDir write SetInitialDir;
     property Filter: String read FFilter write SetFilter;
-    property FilterIndex: Integer read FFilterIndex write SetFilterIndex;
+    property FilterIndex: Integer read FFilterIndex write SetFilterIndex default 0;
     property DefExtension: String read FDefExtension write SetDefExtension;
-    property OpenDialog: Boolean read FOpenDialog write SetOpenDialog;
+    property OpenDialog: Boolean read FOpenDialog write SetOpenDialog default True;
     property Localizy;
   end;
 
@@ -290,12 +290,12 @@ type
     function AdditionalUnits: String; override;
   published
     property Title: String read FTitle write SetTitle;
-    property Options: TOpenDirOptions read FOptions write SetOptions;
+    property Options: TOpenDirOptions read FOptions write SetOptions default [odOnlySystemDirs];
     property InitialPath: String read FInitialPath write SetInitialPath;
-    property CenterOnScreen: Boolean read FCenterOnScreen write SetCenterOnScreen;
+    property CenterOnScreen: Boolean read FCenterOnScreen write SetCenterOnScreen default False;
     property OnSelChanged: TOnODSelChange read FOnSelChanged write SetOnSelChanged;
     property Localizy;
-    property AltDialog: Boolean read FAltDialog write SetAltDialog;
+    property AltDialog: Boolean read FAltDialog write SetAltDialog default False;
   end;
 
 
@@ -316,23 +316,23 @@ type
     constructor Create( AOwner: TComponent ); override;
     function Pcode_Generate: Boolean; override;
   published
-    property ColorCustomOption: TColorCustomOption read FColorCustomOption write SetColorCustomOption;
-    property CustomColor1: TColor index 1 read GetCustomColor write SetCustomColor;
-    property CustomColor2: TColor index 2 read GetCustomColor write SetCustomColor;
-    property CustomColor3: TColor index 3 read GetCustomColor write SetCustomColor;
-    property CustomColor4: TColor index 4 read GetCustomColor write SetCustomColor;
-    property CustomColor5: TColor index 5 read GetCustomColor write SetCustomColor;
-    property CustomColor6: TColor index 6 read GetCustomColor write SetCustomColor;
-    property CustomColor7: TColor index 7 read GetCustomColor write SetCustomColor;
-    property CustomColor8: TColor index 8 read GetCustomColor write SetCustomColor;
-    property CustomColor9: TColor index 9 read GetCustomColor write SetCustomColor;
-    property CustomColor10: TColor index 10 read GetCustomColor write SetCustomColor;
-    property CustomColor11: TColor index 11 read GetCustomColor write SetCustomColor;
-    property CustomColor12: TColor index 12 read GetCustomColor write SetCustomColor;
-    property CustomColor13: TColor index 13 read GetCustomColor write SetCustomColor;
-    property CustomColor14: TColor index 14 read GetCustomColor write SetCustomColor;
-    property CustomColor15: TColor index 15 read GetCustomColor write SetCustomColor;
-    property CustomColor16: TColor index 16 read GetCustomColor write SetCustomColor;
+    property ColorCustomOption: TColorCustomOption read FColorCustomOption write SetColorCustomOption default ccoFullOpen;
+    property CustomColor1: TColor index 1 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor2: TColor index 2 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor3: TColor index 3 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor4: TColor index 4 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor5: TColor index 5 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor6: TColor index 6 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor7: TColor index 7 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor8: TColor index 8 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor9: TColor index 9 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor10: TColor index 10 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor11: TColor index 11 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor12: TColor index 12 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor13: TColor index 13 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor14: TColor index 14 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor15: TColor index 15 read GetCustomColor write SetCustomColor default clWhite;
+    property CustomColor16: TColor index 16 read GetCustomColor write SetCustomColor default clWhite;
   end;
 
   //----------------------------------------------------------------------------
@@ -365,10 +365,10 @@ type
     destructor Destroy; override;
   published
     property Icon: TIcon read FIcon write SetIcon;
-    property Active: Boolean read FActive write SetActive;
-    property NoAutoDeactivate: Boolean read FNoAutoDeactivate write SetNoAutoDeactivate;
+    property Active: Boolean read FActive write SetActive default True;
+    property NoAutoDeactivate: Boolean read FNoAutoDeactivate write SetNoAutoDeactivate default False;
     property Tooltip: String read FTooltip write SetTooltip;
-    property AutoRecreate: Boolean read FAutoRecreate write SetAutoRecreate;
+    property AutoRecreate: Boolean read FAutoRecreate write SetAutoRecreate  default False;
     property OnMouse: TOnTrayIconMouse read FOnMouse write SetOnMouse;
     property Localizy;
   end;

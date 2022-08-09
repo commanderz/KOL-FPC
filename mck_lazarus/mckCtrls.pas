@@ -114,9 +114,9 @@ type
     function Pcode_Generate: Boolean; override;
   published
     property Border;
-    property TextAlign;
-    property VerticalAlign;
-    property TabStop;
+    property TextAlign default taCenter;
+    property VerticalAlign default vaCenter;
+    property TabStop default True;
     property TabOrder;
     property OnEnter;
     property OnLeave;
@@ -129,10 +129,10 @@ type
     property autoSize;
     property DefaultBtn;
     property CancelBtn;
-    property image: TPicture read Fimage write Setimage;
+    property image: TPicture read Fimage write Setimage;// stored IsImageStored;
     property action;
-    property windowed;
-    property Flat: Boolean read FFlat write SetFlat; // only for not windowed ?
+    property windowed default True;
+    property Flat: Boolean read FFlat write SetFlat default False; // only for not windowed ?
     property WordWrap;
     property LikeSpeedButton;
     property AllowBitmapCompression: Boolean read FAllowBitmapCompression write SetAllowBitmapCompression
@@ -204,15 +204,15 @@ type
     procedure SetupConstruct_Compact; override;
     function SupportsFormCompact: Boolean; override;
   published
-    property options: TBitBtnOptions read FOptions write SetOptions;
+    property options: TBitBtnOptions read FOptions write SetOptions default [];
     property glyphBitmap: TBitmap read FGlyphBitmap write SetGlyphBitmap;
-    property glyphCount: Integer read FGlyphCount write SetGlyphCount;
-    property glyphLayout: TGlyphLayout read FGlyphLayout write SetGlyphLayout;
+    property glyphCount: Integer read FGlyphCount write SetGlyphCount default 0;
+    property glyphLayout: TGlyphLayout read FGlyphLayout write SetGlyphLayout default glyphLeft;
     property imageList: TKOLImageList read FImageList write SetImageList;
-    property imageIndex: Integer read FImageIndex write SetImageIndex;
-    property TextAlign;
-    property VerticalAlign;
-    property TabStop;
+    property imageIndex: Integer read FImageIndex write SetImageIndex default 0;
+    property TextAlign default taCenter;
+    property VerticalAlign default vaCenter;
+    property TabStop default True;
     property TabOrder;
     property Transparent;
     property OnEnter;
@@ -225,14 +225,14 @@ type
     property OnChange;
     property OnBitBtnDraw;
     property OnTestMouseOver: TOnTestMouseOver read FOnTestMouseOver write SetOnTestMouseOver;
-    property autoAdjustSize: Boolean read FautoAdjustSize write SetautoAdjustSize;
+    property autoAdjustSize: Boolean read FautoAdjustSize write SetautoAdjustSize default False;
     property popupMenu;
-    property RepeatInterval: Integer read FRepeatInterval write SetRepeatInterval;
-    property Flat: Boolean read FFlat write SetFlat;
+    property RepeatInterval: Integer read FRepeatInterval write SetRepeatInterval default 0;
+    property Flat: Boolean read FFlat write SetFlat default False;
     property autoSize;
-    property BitBtnDrawMnemonic: Boolean read FBitBtnDrawMnemonic write SetBitBtnDrawMnemonic;
-    property TextShiftX: Integer read FTextShiftX write SetTextShiftX;
-    property TextShiftY: Integer read FTextShiftY write SetTextShiftY;
+    property BitBtnDrawMnemonic: Boolean read FBitBtnDrawMnemonic write SetBitBtnDrawMnemonic default False;
+    property TextShiftX: Integer read FTextShiftX write SetTextShiftX default 1;
+    property TextShiftY: Integer read FTextShiftY write SetTextShiftY default 1;
     property DefaultBtn;
     property CancelBtn;
     property Brush;
@@ -300,13 +300,13 @@ type
   published
     property Transparent;
     property TextAlign;
-    property VerticalAlign: TVerticalAlign read Get_VertAlign write Set_VertAlign;
+    property VerticalAlign: TVerticalAlign read Get_VertAlign write Set_VertAlign default vaTop;
     property wordWrap;
     property popupMenu;
     property autoSize;
     property Brush;
-    property ShowAccelChar: Boolean read FShowAccelChar write SetShowAccelChar;
-    property windowed;
+    property ShowAccelChar: Boolean read FShowAccelChar write SetShowAccelChar default False;
+    property windowed default True;
   end;
 
 
@@ -336,13 +336,13 @@ type
     procedure SetupConstruct_Compact; override;
     function SupportsFormCompact: Boolean; override;
   published
-    property ShadowDeep: Integer read FShadowDeep write SetShadowDeep;
-    property Color2: TColor read FColor2 write SetColor2;
+    property ShadowDeep: Integer read FShadowDeep write SetShadowDeep default 0;
+    property Color2: TColor read FColor2 write SetColor2 default clNone;
     property autoSize;
-    property Ctl3D;
+    property Ctl3D default False;
     property Brush;
     property wordwrap;
-    property HasBorder;
+    property HasBorder default True;
   end;
 
 
@@ -397,9 +397,9 @@ type
   published
     property Transparent;
     property TextAlign;
-    property edgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle;
+    property edgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle default esRaised;
     property TabOrder;
-    property VerticalAlign: TVerticalAlign read Get_VA write Set_VA;
+    property VerticalAlign: TVerticalAlign read Get_VA write Set_VA default vaTop;
     property Border;
     property MarginTop;
     property MarginBottom;
@@ -407,7 +407,7 @@ type
     property MarginRight;
     property popupMenu;
     property Brush;
-    property ShowAccelChar: Boolean read FShowAccelChar write SetShowAccelChar;
+    property ShowAccelChar: Boolean read FShowAccelChar write SetShowAccelChar default False;
   end;
 
   //============================================================================
@@ -461,10 +461,10 @@ type
     function Pcode_Generate: Boolean; override;
   published
     property Transparent;
-    property Color1: TColor read FColor1 write SetColor1;
-    property Color2: TColor read FColor2 write SetColor2;
-    property GradientStyle: KOL.TGradientStyle read FgradientStyle write SetgradientStyle;
-    property GradientLayout: KOL.TGradientLayout read FgradientLayout write SetgradientLayout;
+    property Color1: TColor read FColor1 write SetColor1 default clBlue;
+    property Color2: TColor read FColor2 write SetColor2 default clNavy;
+    property GradientStyle: KOL.TGradientStyle read FgradientStyle write SetgradientStyle default gsVertical;
+    property GradientLayout: KOL.TGradientLayout read FgradientLayout write SetgradientLayout default KOL.glTop;
     property TabOrder;
     property Border;
     property MarginTop;
@@ -472,7 +472,7 @@ type
     property MarginLeft;
     property MarginRight;
     property popupMenu;
-    property HasBorder;
+    property HasBorder default True;
   end;
 
 
@@ -510,11 +510,11 @@ type
     procedure SetupConstruct_Compact; override;
   published
     property Transparent;
-    property MinSizePrev: Integer read FMinSizePrev write SetMinSizePrev;
-    property MinSizeNext: Integer read FMinSizeNext write SetMinSizeNext;
+    property MinSizePrev: Integer read FMinSizePrev write SetMinSizePrev default 0;
+    property MinSizeNext: Integer read FMinSizeNext write SetMinSizeNext default 0;
     property TabOrder;
     //property beveled: Boolean read FBeveled write SetBeveled;
-    property edgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle;
+    property edgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle default esLowered;
     property Caption: Boolean read fNotAvailable;
     //property CenterOnParent: Boolean read fNotAvailable;
     property OnSplit;
@@ -552,13 +552,13 @@ type
     property Transparent;
     property TabOrder;
     property Border;
-    property MarginTop;
-    property MarginBottom;
-    property MarginLeft;
-    property MarginRight;
+    property MarginTop default 22;
+    property MarginBottom default 2;
+    property MarginLeft default 2;
+    property MarginRight default 2;
     property popupMenu;
-    property TextAlign;
-    property HasBorder;
+    property TextAlign default taLeft;
+    property HasBorder default False;
     property Brush;
   end;
 
@@ -593,8 +593,8 @@ type
     function Pcode_Generate: Boolean; override;
   published
     property Transparent;
-    property Checked: Boolean read FChecked write SetChecked;
-    property TabStop;
+    property Checked: Boolean read FChecked write SetChecked default False;
+    property TabStop default True;
     property TabOrder;
     property OnKeyDown;
     property OnKeyUp;
@@ -605,11 +605,11 @@ type
     property OnLeave;
     property popupMenu;
     property autoSize;
-    property HasBorder;
+    property HasBorder default False;
     property Brush;
-    property Auto3State: Boolean read FAuto3State write SetAuto3State;
+    property Auto3State: Boolean read FAuto3State write SetAuto3State default False;
     property action;
-    property windowed;
+    property windowed default True;
     property WordWrap; // only for not windowed
     property Border;   // only for not windowed when WordWrap=TRUE
     property LikeSpeedButton;
@@ -642,8 +642,8 @@ type
     function Pcode_Generate: Boolean; override;
   published
     property Transparent;
-    property Checked: Boolean read FChecked write SetChecked;
-    property TabStop;
+    property Checked: Boolean read FChecked write SetChecked default False;
+    property TabStop default True;
     property TabOrder;
     property OnKeyDown;
     property OnKeyUp;
@@ -654,10 +654,10 @@ type
     property OnLeave;
     property popupMenu;
     property autoSize;
-    property HasBorder;
+    property HasBorder default False;
     property Brush;
     property action;
-    property windowed;
+    property windowed default True;
     property WordWrap; // only for not windowed
     property Border;   // only for not windowed when WordWrap=TRUE
     property LikeSpeedButton;
@@ -713,10 +713,10 @@ type
     function SupportsFormCompact: Boolean; override;
     procedure SetupConstruct_Compact; override;
   published
-    property Transparent: Boolean read FEdTransparent write SetEdTransparent;
+    property Transparent: Boolean read FEdTransparent write SetEdTransparent default False;
     property Text: TDelphiString read GetText write SetText;
-    property Options: TKOLEditOptions read FOptions write SetOptions;
-    property TabStop;
+    property Options: TKOLEditOptions read FOptions write SetOptions default [];
+    property TabStop default True;
     property TabOrder;
     property OnChange;
     property OnSelChange;
@@ -731,10 +731,10 @@ type
     property popupMenu;
     property TextAlign;
     property autoSize;
-    property HasBorder;
+    property HasBorder default True;
     property EditTabChar;
     property Brush;
-    property windowed;
+    property windowed default True;
     property Unicode: Boolean read FUnicode write SetUnicode;
   end;
 
@@ -795,12 +795,12 @@ type
     function SupportsFormCompact: Boolean; override;
     procedure SetupConstruct_Compact; override;
   published
-    property Transparent: Boolean read FEdTransparent write SetEdTransparent;
+    property Transparent: Boolean read FEdTransparent write SetEdTransparent default False;
     property Text: TStrings read GetText write SetText;
     property TextAlign;
-    property TabStop;
+    property TabStop default True;
     property TabOrder;
-    property Options: TKOLMemoOptions read FOptions write SetOptions;
+    property Options: TKOLMemoOptions read FOptions write SetOptions default [];
     property OnChange;
     property OnSelChange;
     property Caption: String read GetCaption; // redefined as read only to remove from Object Inspector
@@ -812,7 +812,7 @@ type
     property OnEnter;
     property OnLeave;
     property popupMenu;
-    property HasBorder;
+    property HasBorder default True;
     property OnScroll;
     property EditTabChar;
     property Brush;
@@ -903,12 +903,12 @@ type
     destructor Destroy; override;
     function Pcode_Generate: Boolean; override;
   published
-    property Transparent read FRE_Transparent write SetRE_Transparent;
-    property RE_Transparent: Boolean read FRE_Transparent write SetRE_Transparent;
+    property Transparent read FRE_Transparent write SetRE_Transparent default False;
+    property RE_Transparent: Boolean read FRE_Transparent write SetRE_Transparent default False;
     property Text: TStrings read GetText write SetText;
-    property TabStop;
+    property TabStop default True;
     property TabOrder;
-    property Options: TKOLMemoOptions read FOptions write SetOptions;
+    property Options: TKOLMemoOptions read FOptions write SetOptions default [];
     property OnChange;
     property OnSelChange;
     property Caption: String read GetCaption; // redefined as read only to remove from Object Inspector
@@ -917,33 +917,33 @@ type
     property OnChar;
     property OnKeyChar;
     property OnKeyDeadChar;
-    property version: TKOLRichEditVersion read Fversion write Setversion;
+    property version: TKOLRichEditVersion read Fversion write Setversion default ver3;
     property OnProgress;
     property OnRE_URLClick;
     property OnRE_OverURL;
     property OnRE_InsOvrMode_Change;
-    property RE_DisableOverwriteChange: Boolean read FRE_DisableOverwriteChange write SetRE_DisableOverwriteChange;
-    property MaxTextSize: DWORD read FMaxTextSize write SetMaxTextSize;
-    property RE_FmtStandard: Boolean read FRE_FmtStandard write SetRE_FmtStandard;
-    property RE_AutoKeyboard: Boolean read FRE_AutoKeyboard write SetRE_AutoKeyboard;
-    property RE_AutoFont: Boolean read FRE_AutoFont write SetRE_AutoFont;
-    property RE_AutoFontSizeAdjust: Boolean read FRE_AutoFontSizeAdjust write SetRE_AutoFontSizeAdjust;
-    property RE_DualFont: Boolean read FRE_DualFont write SetRE_DualFont;
-    property RE_UIFonts: Boolean read FRE_UIFonts write SetRE_UIFonts;
-    property RE_IMECancelComplete: Boolean read FRE_IMECancelComplete write SetRE_IMECancelComplete;
-    property RE_IMEAlwaysSendNotify: Boolean read FRE_IMEAlwaysSendNotify write SetRE_IMEAlwaysSendNotify;
-    property RE_AutoKeybdSet: Boolean read FRE_AutoKeybdSet write SetRE_AutoKeybdSet;
-    property RE_AutoURLDetect: Boolean read FRE_AutoURLDetect write SetRE_AutoURLDetect;
-    property RE_ZoomNumerator: Integer read FRE_ZoomNumerator write SetRE_ZoomNumerator;
-    property RE_ZoomDenominator: Integer read FRE_ZoomDenominator write SetRE_ZoomDenominator;
+    property RE_DisableOverwriteChange: Boolean read FRE_DisableOverwriteChange write SetRE_DisableOverwriteChange default False;
+    property MaxTextSize: DWORD read FMaxTextSize write SetMaxTextSize default 32767;
+    property RE_FmtStandard: Boolean read FRE_FmtStandard write SetRE_FmtStandard default False;
+    property RE_AutoKeyboard: Boolean read FRE_AutoKeyboard write SetRE_AutoKeyboard default False;
+    property RE_AutoFont: Boolean read FRE_AutoFont write SetRE_AutoFont default True;
+    property RE_AutoFontSizeAdjust: Boolean read FRE_AutoFontSizeAdjust write SetRE_AutoFontSizeAdjust default True;
+    property RE_DualFont: Boolean read FRE_DualFont write SetRE_DualFont default False;
+    property RE_UIFonts: Boolean read FRE_UIFonts write SetRE_UIFonts default False;
+    property RE_IMECancelComplete: Boolean read FRE_IMECancelComplete write SetRE_IMECancelComplete default False;
+    property RE_IMEAlwaysSendNotify: Boolean read FRE_IMEAlwaysSendNotify write SetRE_IMEAlwaysSendNotify default False;
+    property RE_AutoKeybdSet: Boolean read FRE_AutoKeybdSet write SetRE_AutoKeybdSet default False;
+    property RE_AutoURLDetect: Boolean read FRE_AutoURLDetect write SetRE_AutoURLDetect default False;
+    property RE_ZoomNumerator: Integer read FRE_ZoomNumerator write SetRE_ZoomNumerator default 0;
+    property RE_ZoomDenominator: Integer read FRE_ZoomDenominator write SetRE_ZoomDenominator default 0;
     property OnEnter;
     property OnLeave;
     property popupMenu;
-    property HasBorder;
+    property HasBorder default True;
     property OnScroll;
     property EditTabChar;
     property Brush;
-    property OLESupport: Boolean read FOLESupport write SetOLESupport;
+    property OLESupport: Boolean read FOLESupport write SetOLESupport default False;
     property OverrideScrollbars;
   end;
 
@@ -1002,12 +1002,12 @@ type
     function Pcode_Generate: Boolean; override;
   published
     property Transparent;
-    property TabStop;
+    property TabStop default True;
     property TabOrder;
-    property Options: TKOLListboxOptions read FOptions write SetOptions;
+    property Options: TKOLListboxOptions read FOptions write SetOptions default [loNoIntegralHeight];
     property OnSelChange;
     property Items: TStrings read FItems write SetItems;
-    property CurIndex: Integer read FCurIndex write SetCurIndex;
+    property CurIndex: Integer read FCurIndex write SetCurIndex default 0;
     property OnKeyDown;
     property OnKeyUp;
     property OnChar;
@@ -1016,14 +1016,14 @@ type
     property Caption: String read GetCaption; // hide Caption in Object Inspector
     property OnDrawItem;
     property OnMeasureItem;
-    property Count: Integer read FCount write SetCount;
+    property Count: Integer read FCount write SetCount default 0;
     property OnEnter;
     property OnLeave;
     property popupMenu;
-    property HasBorder;
+    property HasBorder default True;
     property OnScroll;
     property Brush;
-    property LBItemHeight: Integer read fLBItemHeight write SetLBItemHeight; {+ecm}
+    property LBItemHeight: Integer read fLBItemHeight write SetLBItemHeight default 0; {+ecm}
     property OverrideScrollbars;
     property AlwaysAssignItems: Boolean read FAlwaysAssignItems write SetAlwaysAssignItems;
   end;
@@ -1082,16 +1082,16 @@ type
     procedure SetupConstruct_Compact; override;
   published
     property Transparent;
-    property TabStop;
+    property TabStop default True;
     property TabOrder;
-    property Options: TKOLComboOptions read FOptions write SetOptions;
+    property Options: TKOLComboOptions read FOptions write SetOptions default [coNoIntegralHeight];
     property OnChange;
     property OnSelChange;
     property OnDropDown;
     property OnCloseUp;
     property Items: TStrings read FItems write SetItems;
-    property CurIndex: Integer read FCurIndex write SetCurIndex;
-    property DroppedWidth: Integer read FDroppedWidth write SetDroppedWidth;
+    property CurIndex: Integer read FCurIndex write SetCurIndex default 0;
+    property DroppedWidth: Integer read FDroppedWidth write SetDroppedWidth default 0;
     property OnKeyDown;
     property OnKeyUp;
     property OnChar;
@@ -1104,7 +1104,7 @@ type
     property popupMenu;
     property autoSize;
     property Brush;
-    property CBItemHeight: Integer read fCBItemHeight write SetCBItemHeight; {+ecm}
+    property CBItemHeight: Integer read fCBItemHeight write SetCBItemHeight default 0; {+ecm}
     property AlwaysAssignItems: Boolean read FAlwaysAssignItems write SetAlwaysAssignItems;
   end;
 
@@ -1137,7 +1137,7 @@ type
     property MarginRight;
     property popupMenu;
     property Caption: Boolean read fNotAvailable;
-    property windowed;
+    property windowed default True;
   end;
 
 
@@ -1177,12 +1177,12 @@ type
     procedure SetBounds( aLeft, aTop, aWidth, aHeight: Integer ); override;
   published
     property ImageListNormal: TKOLImageList read FImageListNormal write SetImageListNormal;
-    property CurIndex: Integer read FCurIndex write SetCurIndex;
+    property CurIndex: Integer read FCurIndex write SetCurIndex default 0;
     property Transparent;
     property popupMenu;
     property Caption: Boolean read fNotAvailable;
-    property HasBorder; //: Boolean read FHasBorder write SetHasBorder;
-    property autoSize: Boolean read fImgShwAutoSize write SetImgShwAutoSize;
+    property HasBorder default True; //: Boolean read FHasBorder write SetHasBorder;
+    property autoSize: Boolean read fImgShwAutoSize write SetImgShwAutoSize default False;
     property Brush;
     property MarginLeft;
     property MarginTop;
@@ -1225,12 +1225,12 @@ type
     procedure SetupConstruct_Compact; override;
   published
     property Transparent;
-    property Vertical: Boolean read FVertical write SetVertical;
-    property Smooth: Boolean read FSmooth write SetSmooth;
-    property ProgressColor: TColor read FProgressColor write SetProgressColor;
-    property ProgressBkColor: TColor read GetColor write SetColor;
-    property Progress: Integer read FProgress write SetProgress;
-    property MaxProgress: Integer read FMaxProgress write SetMaxProgress;
+    property Vertical: Boolean read FVertical write SetVertical default False;
+    property Smooth: Boolean read FSmooth write SetSmooth default False;
+    property ProgressColor: TColor read FProgressColor write SetProgressColor default clHighlight;
+    property ProgressBkColor: TColor read GetColor write SetColor default clBtnFace;
+    property Progress: Integer read FProgress write SetProgress default 0;
+    property MaxProgress: Integer read FMaxProgress write SetMaxProgress default 100;
     property Caption: Boolean read fNotAvailable;
     property OnMouseDblClk: Boolean read fNotAvailable;
     property popupMenu;
@@ -1297,12 +1297,12 @@ type
     destructor Destroy; override;
   published
     property Caption: String read FCaption write SetCaption;
-    property TextAlign: TTextAlign read FTextAlign write SetTextAlign;
-    property Width: Integer read FWidth write SetWidth;
-    property WidthType: TKOLListViewColWidthType read FWidthType write SetWidthType;
-    property LVColImage: Integer read FLVColImage write SetLVColImage;
-    property LVColRightImg: Boolean read FLVColRightImg write SetLVColRightImg;
-    property LVColOrder: Integer read FLVColOrder write SetLVColOrder;
+    property TextAlign: TTextAlign read FTextAlign write SetTextAlign default taLeft;
+    property Width: Integer read FWidth write SetWidth default 50;
+    property WidthType: TKOLListViewColWidthType read FWidthType write SetWidthType default lvcwtAutosize;
+    property LVColImage: Integer read FLVColImage write SetLVColImage default -1;
+    property LVColRightImg: Boolean read FLVColRightImg write SetLVColRightImg default False;
+    property LVColOrder: Integer read FLVColOrder write SetLVColOrder default -1;
   end;
 
   TKOLListView = class( TKOLControl )
@@ -1385,8 +1385,8 @@ type
     procedure SetupConstruct_Compact; override;
   published
     property Transparent;
-    property Style: TKOLListViewStyle read FStyle write SetStyle;
-    property Options: TKOLListViewOptions read FOptions write SetOptions;
+    property Style: TKOLListViewStyle read FStyle write SetStyle default lvsIcon;
+    property Options: TKOLListViewOptions read FOptions write SetOptions default [];
     property ImageListSmall: TKOLImageList read FImageListSmall write SetImageListSmall;
     property ImageListNormal: TKOLImageList read FImageListNormal write SetImageListNormal;
     property ImageListState: TKOLImageList read FImageListState write SetImageListState;
@@ -1400,10 +1400,10 @@ type
     property OnDeleteLVItem;
     property OnDeleteAllLVItems;
     property OnLVData;
-    property LVCount: Integer read FLVCount write SetLVCount;
-    property LVTextBkColor: TColor read FLVTextBkColor write SetLVTextBkColor;
-    property LVBkColor: TColor read GetColor write SetColor;
-    property LVItemHeight: Integer read fLVItemHeight write SetLVItemHeight;
+    property LVCount: Integer read FLVCount write SetLVCount default 0;
+    property LVTextBkColor: TColor read FLVTextBkColor write SetLVTextBkColor default clWindow;
+    property LVBkColor: TColor read GetColor write SetColor default clWindow;
+    property LVItemHeight: Integer read fLVItemHeight write SetLVItemHeight default 0;
     property OnCompareLVItems;
     property OnEndEditLVItem;
     property OnColumnClick;
@@ -1415,9 +1415,9 @@ type
     property OnLeave;
     property popupMenu;
     property OnMeasureItem;
-    property HasBorder;
+    property HasBorder default True;
     property OnScroll;
-    property TabStop;
+    property TabStop default True;
     property Columns: String read GetColumns write SetColumns stored FALSE;
     property generateConstants: Boolean read FGenerateColIdxConst write SetGenerateColIdxConst;
     property Brush;
@@ -1512,10 +1512,10 @@ type
     property OnEnter;
     property OnLeave;
     property popupMenu;
-    property TVIndent: Integer read FTVIndent write SetTVIndent;
-    property HasBorder;
+    property TVIndent: Integer read FTVIndent write SetTVIndent default 0;
+    property HasBorder default True;
     property OnScroll;
-    property TabStop;
+    property TabStop default True;
     property Brush;
     property OverrideScrollbars;
   end;
@@ -1615,21 +1615,21 @@ type
     property ToolbarComponent: TKOLToolbar read FToolbar;
     property OnClickMethodName: String read fOnClickMethodName;
   published
-    property separator: Boolean read Fseparator write Setseparator;
-    property dropdown: Boolean read Fdropdown write Setdropdown;
-    property checked: Boolean read Fchecked write Setchecked;
+    property separator: Boolean read Fseparator write Setseparator default False;
+    property dropdown: Boolean read Fdropdown write Setdropdown default False;
+    property checked: Boolean read Fchecked write Setchecked default False;
     property Checkable: Boolean read FCheckable write SetCheckable;
-    property radioGroup: Integer read FradioGroup write SetradioGroup;
+    property radioGroup: Integer read FradioGroup write SetradioGroup default 0;
     property picture: TPicture read Fpicture write Setpicture;
-    property sysimg: TSystemToolbarImage read Fsysimg write Setsysimg;
-    property imgIndex: Integer read FimgIndex write SetimgIndex;
-    property visible: Boolean read Fvisible write Setvisible;
-    property enabled: Boolean read Fenabled write Setenabled;
+    property sysimg: TSystemToolbarImage read Fsysimg write Setsysimg default stiCustom;
+    property imgIndex: Integer read FimgIndex write SetimgIndex default 0;
+    property visible: Boolean read Fvisible write Setvisible default True;
+    property enabled: Boolean read Fenabled write Setenabled default True;
     property onClick: TOnToolbarButtonClick read FonClick write SetonClick;
     property caption: String read Fcaption write Setcaption;
     property tooltip: String read Ftooltip write Settooltip;
     property Tag: Boolean read fNotAvailable;
-    property action: TKOLAction read Faction write Setaction;
+    property action: TKOLAction read Faction write Setaction stored False;
   end;
 
   TKOLToolbar = class( TKOLControl )
@@ -1748,16 +1748,16 @@ type
     procedure AssignEvents( SL: TStringList; const AName: String ); override;
   published
     property Transparent;
-    property Options: TToolbarOptions read FOptions write SetOptions;
+    property Options: TToolbarOptions read FOptions write SetOptions default [];
     property bitmap: TBitmap read Fbitmap write Setbitmap;
     property buttons: String read GetButtons write Fbuttons;
     property OnTBDropDown;
     property OnClick;
     property OnTBCustomDraw: TOnTBCustomDraw read FOnTBCustomDraw write SetOnTBCustomDraw;
-    property noTextLabels: Boolean read FnoTextLabels write SetnoTextLabels;
+    property noTextLabels: Boolean read FnoTextLabels write SetnoTextLabels default False;
     property tooltips: TStrings read Ftooltips write Settooltips;
-    property showTooltips: Boolean read FshowTooltips write SetshowTooltips;
-    property mapBitmapColors: Boolean read FmapBitmapColors write SetmapBitmapColors;
+    property showTooltips: Boolean read FshowTooltips write SetshowTooltips default False;
+    property mapBitmapColors: Boolean read FmapBitmapColors write SetmapBitmapColors default True;
     property Border;
     property MarginTop;
     property MarginBottom;
@@ -1765,7 +1765,7 @@ type
     property MarginRight;
     property popupMenu;
     property Caption: Boolean read fNotAvailable;
-    property HasBorder;
+    property HasBorder default False;
 
     property ButtonCount: Integer read FButtonCount write SetBtnCount_Dummy
              stored FALSE;
@@ -1774,13 +1774,13 @@ type
     procedure AssembleBitmap;
     procedure AssembleTooltips;
     procedure DesembleTooltips;
-    property StandardImagesLarge: Boolean read FStandardImagesLarge write SetStandardImagesLarge;
-    property generateConstants: Boolean read FgenerateConstants write SetgenerateConstants;
-    property generateVariables: Boolean read FgenerateVariables write SetgenerateVariables;
-    property TBButtonsMinWidth: Integer read FbuttonMinWidth write SetbuttonMinWidth;
-    property TBButtonsMaxWidth: Integer read FbuttonMaxWidth write SetbuttonMaxWidth;
-    property TBButtonsWidth: Integer read FTBButtonsWidth write SetTBButtonsWidth;
-    property HeightAuto: Boolean read FHeightAuto write SetAutoHeight;
+    property StandardImagesLarge: Boolean read FStandardImagesLarge write SetStandardImagesLarge default False;
+    property generateConstants: Boolean read FgenerateConstants write SetgenerateConstants default True;
+    property generateVariables: Boolean read FgenerateVariables write SetgenerateVariables default False;
+    property TBButtonsMinWidth: Integer read FbuttonMinWidth write SetbuttonMinWidth default 0;
+    property TBButtonsMaxWidth: Integer read FbuttonMaxWidth write SetbuttonMaxWidth default 0;
+    property TBButtonsWidth: Integer read FTBButtonsWidth write SetTBButtonsWidth default 0;
+    property HeightAuto: Boolean read FHeightAuto write SetAutoHeight default True;
     property Brush;
     property Ctl3D;
 
@@ -1788,7 +1788,7 @@ type
     property imageListDisabled: TKOLImageList read FimageListDisabled write SetDisabledimageList;
     property imageListHot: TKOLImageList read FimageListHot write SetHotimageList;
 
-    property FixFlatXP: Boolean read FFixFlatXP write SetFixFlatXP;
+    property FixFlatXP: Boolean read FFixFlatXP write SetFixFlatXP default True;
         // If TRUE (default) then some styles are changed in case of XP on start.
         // This useful (and necessary) only if XP Manifest is used in the application
         // in other case this property can be set to FALSE to make code smaller
@@ -1865,7 +1865,7 @@ type
     property OnDTPUserString: KOL.TDTParseInputEvent read FOnDTPUserString write SetOnDTPUserString;
     property Options: TDateTimePickerOptions read FOptions write SetOptions;
     property Format: String read FFormat write SetFormat;
-    property TabStop;
+    property TabStop default True;
     property OnDropDown;
     property OnCloseUp;
     property OnChange;
@@ -1935,12 +1935,12 @@ type
     property Transparent;
     property Options: TTabControlOptions read FOptions write SetOptions;
     property ImageList: TKOLImageList read FImageList write SetImageList;
-    property ImageList1stIdx: Integer read FImageList1stIdx write SetImageList1stIdx;
-    property Count: Integer read GetCount write SetCount;
+    property ImageList1stIdx: Integer read FImageList1stIdx write SetImageList1stIdx default 0;
+    property Count: Integer read GetCount write SetCount stored False;
     property Font;
     property CurIndex: Integer read GetCurIndex write SetCurIndex stored FALSE;
     property OnSelChange;
-    property edgeType: TEdgeStyle read FedgeType write SetedgeType;
+    property edgeType: TEdgeStyle read FedgeType write SetedgeType default esNone;
     property Border;
     property MarginTop;
     property MarginBottom;
@@ -1954,7 +1954,7 @@ type
     property OnChar;
     property OnKeyChar;
     property OnKeyDeadChar;
-    property generateConstants: Boolean read FgenerateConstants write SetgenerateConstants;
+    property generateConstants: Boolean read FgenerateConstants write SetgenerateConstants default True;
     property OnDrawItem;
     property Brush;
   protected
@@ -2010,9 +2010,9 @@ type
     procedure SetupConstruct_Compact; override;
   published
     constructor Create( AOwner: TComponent ); override;
-    property ScrollBars: TScrollBars read FScrollBars write SetScrollBars;
-    property ControlContainer: Boolean read FControlContainer write SetControlContainer;
-    property EdgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle;
+    property ScrollBars: TScrollBars read FScrollBars write SetScrollBars default ssBoth;
+    property ControlContainer: Boolean read FControlContainer write SetControlContainer default False;
+    property EdgeStyle: TEdgeStyle read FEdgeStyle write SetEdgeStyle default esLowered;
     property popupMenu;
     property Border;
     property Caption: Boolean read fNotAvailable;
@@ -2061,11 +2061,11 @@ type
     procedure SetupConstruct_Compact; override;
   published
     property popupMenu;
-    property SBMin: Integer read FSBMin write SetSBMin;
-    property SBMax: Integer read FSBMax write SetSBMax;
-    property SBPageSize: Integer read FSBPageSize write SetSBPageSize;
-    property SBPosition: Integer read FSBPosition write SetSBPosition;
-    property SBbar: TScrollerBar read FSBbar write SetSBbar;
+    property SBMin: Integer read FSBMin write SetSBMin default 0;
+    property SBMax: Integer read FSBMax write SetSBMax default 100;
+    property SBPageSize: Integer read FSBPageSize write SetSBPageSize default 0;
+    property SBPosition: Integer read FSBPosition write SetSBPosition default 0;
+    property SBbar: TScrollerBar read FSBbar write SetSBbar default KOL.sbVertical;
     property OnSBBeforeScroll: TOnSBBeforeScroll read FOnSBBeforeScroll write SetOnSBBeforeScroll;
     property OnSBScroll: TOnSBScroll read FOnSBScroll write SetOnSBScroll;
   end;
